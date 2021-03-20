@@ -6,7 +6,7 @@
 
     <groupId>graph</groupId>
     <artifactId>graph</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -79,6 +79,28 @@
             <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
+
+
+        <!--   VALIDATION     -->
+
+        <!--    HIBERNATE VALIDATOR    -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>7.0.1.Final</version>
+        </dependency>
+
+
+<!--        &lt;!&ndash;    JSON    &ndash;&gt;-->
+
+<!--        &lt;!&ndash;    JACKSON    &ndash;&gt;-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.12.2</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
