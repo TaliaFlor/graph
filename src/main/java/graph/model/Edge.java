@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class Edge {
+
     @Positive
     private final int id;
     private final Node origin;

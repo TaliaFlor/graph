@@ -2,7 +2,6 @@ package graph.representation;
 
 import graph.model.Edge;
 import graph.model.Node;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,12 +11,16 @@ import java.util.Map;
 
 public class Graph {
 
-    @Getter
     private final Map<Integer, List<Node>> graph = new HashMap<>();
 
+    //TODO toString()
 
     public List<Node> get(int index) {
         return graph.get(index);
+    }
+
+    public Map<Integer, List<Node>> get() {
+        return graph;
     }
 
     public void add(List<Edge> edges) {

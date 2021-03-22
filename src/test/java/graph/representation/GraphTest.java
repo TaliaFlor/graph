@@ -84,7 +84,7 @@ class GraphTest {
 
         graph.add(edge);
 
-        System.out.println(graph.getGraph());
+//        System.out.println(graph.getGraph());
     }
 
 

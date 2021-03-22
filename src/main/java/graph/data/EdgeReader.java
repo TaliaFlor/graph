@@ -1,8 +1,9 @@
 package graph.data;
 
 import graph.exception.MalformedObjectException;
+import graph.model.Edge;
 import graph.model.Node;
-import graph.util.NodeParser;
+import graph.util.EdgeParser;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -13,27 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class NodeReader implements DataReader<Node> {
+public class EdgeReader implements DataReader<Edge> {
 
-    private final NodeParser parser = new NodeParser();
+    private final EdgeParser parser;
 
     private final String filename;
     private final int linesToSkip;
     private final char separator;
 
 
-    public NodeReader(String filename, int linesToSkip, char separator) {
+    public EdgeReader(List<Node> nodeList, String filename, int linesToSkip, char separator) {
         this.filename = filename;
         this.linesToSkip = linesToSkip;
         this.separator = separator;
+
+        parser = new EdgeParser(nodeList);
     }
 
 
     @Override
-    public List<Node> read() {
-        log.trace("Reading node file");
+    public List<Edge> read() {
+        log.trace("Reading edge file");
 
-        List<Node> nodes = new ArrayList<>();
+        List<Edge> edges = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 
             int lineNumber = 0;
@@ -44,26 +47,26 @@ public class NodeReader implements DataReader<Node> {
                     continue;
 
                 String[] data = line.split(String.valueOf(separator));
-                Node node = parser.parse(data);
-                nodes.add(node);
+                Edge edge = parser.parse(data);
+                edges.add(edge);
             }
 
             log.info("{} lines read", (lineNumber - 1));
         } catch (FileNotFoundException e) {
-            log.error("Node file not found - {}", e.getMessage());
+            log.error("Edge file not found - {}", e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
-            log.error("Input error during node file reading");
+            log.error("Input error during edge file reading");
             e.printStackTrace();
         } catch (MalformedObjectException e) {
             log.error(e.getMessage());
         } catch (Exception e) {
-            log.error("Error during node file reading");
+            log.error("Error during edge file reading");
             e.printStackTrace();
         }
 
-        log.trace("Node file read");
-        return nodes;
+        log.trace("Edge file read");
+        return edges;
     }
 
 }
