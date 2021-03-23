@@ -2,6 +2,7 @@ package graph.representation;
 
 import graph.model.Edge;
 import graph.model.Node;
+import graph.util.Json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +14,12 @@ public class Graph {
 
     private final Map<Integer, List<Node>> graph = new HashMap<>();
 
-    //TODO toString()
+
+    @Override
+    public String toString() {
+        return Json.toJson(graph);
+    }
+
 
     public List<Node> get(int index) {
         return graph.get(index);

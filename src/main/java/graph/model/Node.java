@@ -1,6 +1,8 @@
 package graph.model;
 
+import com.google.gson.Gson;
 import graph.exception.MalformedObjectException;
+import graph.util.Json;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,11 +24,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "{\"Node\":{"
-                + "\"id\":\"" + id + "\""
-                + ", \"name\":\"" + name + "\""
-                + ", \"color\":\"" + color + "\""
-                + "}}";
+        return Json.toJson(new Node(id, name, color));
     }
 
 }
