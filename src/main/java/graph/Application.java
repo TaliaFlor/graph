@@ -19,24 +19,28 @@ public class Application {
 
     public static void main(String[] args) {
         try {
-            // Reading nodes
-            NodeReader nodeReader = new NodeReader(PATH + "/nodes.csv", NUM_LINES_TO_SKIP, SEPARATOR);
-            List<Node> nodeList = nodeReader.read();
-
-            // Reading edges
-            EdgeReader edgeReader = new EdgeReader(nodeList, PATH + "/edges.csv", NUM_LINES_TO_SKIP, SEPARATOR);
-            List<Edge> edgeList = edgeReader.read();
+            List<Node> nodeList = readNodesFile("/nodes.csv");
+            List<Edge> edgeList = readEdgesFile("/edges.csv", nodeList);
 
             // Creating graphs
             Graph graph = new Graph();
             graph.add(edgeList);
 
-            // Showing results
             System.out.println(graph);
         } catch (Exception e) {
             log.error("Error during graph creation");
             e.printStackTrace();
         }
+    }
+
+    private static List<Node> readNodesFile(String filename) {
+        NodeReader nodeReader = new NodeReader(PATH + filename, NUM_LINES_TO_SKIP, SEPARATOR);
+        return nodeReader.read();
+    }
+
+    private static List<Edge> readEdgesFile(String filename, List<Node> nodeList) {
+        EdgeReader edgeReader = new EdgeReader(nodeList, PATH + filename, NUM_LINES_TO_SKIP, SEPARATOR);
+        return edgeReader.read();
     }
 
 }

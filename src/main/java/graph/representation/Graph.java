@@ -3,6 +3,7 @@ package graph.representation;
 import graph.model.Edge;
 import graph.model.Node;
 import graph.util.Json;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,23 +11,22 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Graph {
+@Getter
+public class Graph {    //TODO atributo com a quantidade de vértices e arestas
 
-    private final Map<Integer, List<Node>> graph = new HashMap<>();
+//    private int nodes;
+//    private int edges;
+    private final Map<Integer, List<Node>> graph = new HashMap<>();     //Transformar isso num objecto e lista de objetos
 
 
     @Override
     public String toString() {
-        return Json.toJson(graph);
+        return Json.toJson(this);
     }
 
 
-    public List<Node> get(int index) {
-        return graph.get(index);
-    }
-
-    public Map<Integer, List<Node>> get() {
-        return graph;
+    public List<Node> get(int nodeId) {
+        return graph.get(nodeId);
     }
 
     public void add(List<Edge> edges) {
@@ -42,10 +42,10 @@ public class Graph {
         }
     }
 
-    private void addNode(int index, Node node) {
-        List<Node> adjacencyList = graph.getOrDefault(index, new ArrayList<>());
+    private void addNode(int nodeId, Node node) {
+        List<Node> adjacencyList = graph.getOrDefault(nodeId, new ArrayList<>());
         adjacencyList.add(node);
-        graph.put(index, adjacencyList);
+        graph.put(nodeId, adjacencyList);
     }
 
 }

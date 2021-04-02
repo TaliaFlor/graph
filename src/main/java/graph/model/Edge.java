@@ -1,6 +1,5 @@
 package graph.model;
 
-import com.google.gson.Gson;
 import graph.util.Json;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
@@ -21,7 +20,7 @@ public class Edge {
 
     @Override
     public String toString() {
-        return Json.toJson(new Edge(id, origin, destiny, isDirected));
+        return Json.toJson(this);
     }
 
 

@@ -1,26 +1,22 @@
-package graph.model;
+package graph.representation;
 
-import com.google.gson.Gson;
-import graph.exception.MalformedObjectException;
+import graph.model.Node;
 import graph.util.Json;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class Node {
+public class Relation {
 
     @Positive
-    private final int id;
-    private String name;
-    private String color;
+    private final int nodeId;
+    private List<Node> adjacencyList;
 
     @Override
     public String toString() {
