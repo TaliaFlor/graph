@@ -3,7 +3,7 @@ package graph.data;
 import graph.exception.MalformedObjectException;
 import graph.model.Edge;
 import graph.model.Node;
-import graph.util.EdgeParser;
+import graph.parser.EdgeParser;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -51,7 +51,7 @@ public class EdgeReader implements DataReader<Edge> {
                 edges.add(edge);
             }
 
-            log.info("{} lines read", (lineNumber - 1));
+            log.info("{} edges parsed", (lineNumber - 1));
         } catch (FileNotFoundException e) {
             log.error("Edge file not found - {}", e.getMessage());
             e.printStackTrace();

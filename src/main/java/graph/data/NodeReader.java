@@ -2,7 +2,7 @@ package graph.data;
 
 import graph.exception.MalformedObjectException;
 import graph.model.Node;
-import graph.util.NodeParser;
+import graph.parser.NodeParser;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -48,7 +48,7 @@ public class NodeReader implements DataReader<Node> {
                 nodes.add(node);
             }
 
-            log.info("{} lines read", (lineNumber - 1));
+            log.info("{} nodes parsed", (lineNumber - 1));
         } catch (FileNotFoundException e) {
             log.error("Node file not found - {}", e.getMessage());
             e.printStackTrace();

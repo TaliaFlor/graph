@@ -1,4 +1,4 @@
-package graph.util;
+package graph.parser;
 
 public interface Parser<T> {
 
@@ -10,6 +10,6 @@ public interface Parser<T> {
      * @param data data to be parsed
      * @return the object from the data
      */
-   T parse(String[] data);
+    T parse(String[] data);
 
 }

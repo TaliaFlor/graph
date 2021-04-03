@@ -2,16 +2,19 @@ package graph.model;
 
 import graph.util.Json;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Edge {
 
     @Positive
+    @EqualsAndHashCode.Include
     private final int id;
     private final Node origin;
     private final Node destiny;
