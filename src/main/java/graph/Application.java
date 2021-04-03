@@ -5,11 +5,10 @@ import graph.data.NodeReader;
 import graph.model.Edge;
 import graph.model.Node;
 import graph.representation.Graph;
-import lombok.extern.slf4j.Slf4j;
 
+import java.util.Deque;
 import java.util.List;
 
-@Slf4j
 public class Application {
 
     private static final String PATH = "src/main/resources";
@@ -18,19 +17,35 @@ public class Application {
 
 
     public static void main(String[] args) {
-        try {
-            List<Node> nodeList = readNodesFile("/nodes.csv");
-            List<Edge> edgeList = readEdgesFile("/edges.csv", nodeList);
+//            Graph graph = readSimpleGraph();
 
-            // Creating graphs
-            Graph graph = new Graph();
-            graph.add(edgeList);
+        Graph graph = readMazeGraph();
 
-            System.out.println(graph);
-        } catch (Exception e) {
-            log.error("Error during graph creation");
-            e.printStackTrace();
-        }
+        Deque<Node> path = graph.search(1, 10);
+
+        System.out.println(path);
+    }
+
+    private static Graph readSimpleGraph() {
+        List<Node> nodes = readNodesFile("/examples/simple/nodes.csv");
+        List<Edge> edges = readEdgesFile("/examples/simple/edges.csv", nodes);
+
+        // Create graph
+        Graph graph = new Graph();
+        graph.add(edges);
+
+        return graph;
+    }
+
+    private static Graph readMazeGraph() {
+        List<Node> nodes = readNodesFile("/examples/maze/nodes.csv");
+        List<Edge> edges = readEdgesFile("/examples/maze/edges.csv", nodes);
+
+        // Create graph
+        Graph graph = new Graph();
+        graph.add(edges);
+
+        return graph;
     }
 
     private static List<Node> readNodesFile(String filename) {
