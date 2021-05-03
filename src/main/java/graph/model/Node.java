@@ -22,4 +22,8 @@ public class Node {
         return Json.toJson(this);
     }
 
+    public boolean equalsById(int otherId) {
+        return id == otherId;
+    }
+
 }

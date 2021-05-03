@@ -1,9 +1,10 @@
 package graph.representation;
 
-import graph.model.BfsModel;
 import graph.model.Edge;
 import graph.model.Node;
-import graph.util.BfsUtil;
+import graph.search.BfsModel;
+import graph.search.BfsUtil;
+import graph.search.Color;
 import graph.util.Json;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -35,9 +36,13 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
     }
 
 
+    // ====================== UTIL ======================
+
     public List<Node> getAdjacencyList(Node node) {
         return graph.get(node);
     }
+
+    // ====================== ADD ======================
 
     public void add(List<Edge> edges) {
         log.trace("Populating graph");
@@ -60,8 +65,12 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         graph.put(origin, adjacencyList);
     }
 
+    // ====================== SEARCH ======================
+
     public Deque<Node> search(int targetId) {
         log.trace("Searching for target with ID {}", targetId);
+
+        validateGraph();
 
         int initialNodeId = graph.keySet().stream()
                 .findAny()
@@ -80,8 +89,9 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
      * @param targetId      the node which is being searched for
      * @return a path from the inital node to the target node. Null if that path does not exist.
      */
-    public Deque<Node> search(int initialNodeId, int targetId) {    //TODO walk and walk w/ initial node
+    public Deque<Node> search(int initialNodeId, int targetId) {
         log.trace("Searching for target with ID {} from starting node with ID {}", targetId, initialNodeId);
+        validateGraph();
         return breadthFirstSearch(initialNodeId, targetId);
     }
 
@@ -124,6 +134,8 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
 
             model.markAsExplored();
         }
+        if(!targetFound)
+            log.info("Target with ID {} not found! Search unsucessful", targetId);
     }
 
     /**
@@ -164,6 +176,90 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         }
 
         return deque;
+    }
+
+    // ====================== WALK ======================
+
+    public Map<Node, Node> walk() {
+        log.trace("Walking through the graph");
+
+        validateGraph();
+
+        int initialNodeId = graph.keySet().stream()
+                .findAny()
+                .get()
+                .getId();
+
+        return breadthFirstSearch(initialNodeId);
+    }
+
+    public Map<Node, Node> walk(int initialNodeId) {
+        log.trace("Walking through graph starting from node with ID {}", initialNodeId);
+        validateGraph();
+        return breadthFirstSearch(initialNodeId);
+    }
+
+    private Map<Node, Node> breadthFirstSearch(int initialNodeId) {
+        List<BfsModel> models = graph.keySet().stream()
+                .map(BfsModel::new)
+                .collect(toList());
+        bfsUtil = new BfsUtil(models);
+
+        BfsModel initialNode = bfsUtil.findById(initialNodeId);
+        initialNode.markAsInitialNode();
+
+        Queue<BfsModel> queue = new LinkedList<>();
+        queue.offer(initialNode);
+
+        return walkGraph(models, queue);
+    }
+
+    private Map<Node, Node> walkGraph(List<BfsModel> models, Queue<BfsModel> queue) {
+        Map<Node, Node> predecessors = new HashMap<>();
+
+        boolean firstLoop = true;
+        do {
+            if (!firstLoop)
+                queue.offer(nodeNotVisited(models));
+
+            while (!queue.isEmpty()) {
+                BfsModel model = queue.poll();
+                for (Node adjacency : getAdjacencyList(model.getNode())) {
+                    BfsModel adjacencyModel = bfsUtil.findById(adjacency.getId());
+                    if (adjacencyModel.isNotExplored()) {
+                        adjacencyModel.markAsFirstVisited(model);
+                        predecessors.put(adjacencyModel.getNode(), adjacencyModel.getPredecessor());
+                        queue.offer(adjacencyModel);
+                    }
+                }
+                model.markAsExplored();
+            }
+
+            firstLoop = false;
+        } while (!allNodesVisited(models));
+
+        return predecessors;
+    }
+
+    private boolean allNodesVisited(List<BfsModel> models) {
+        long whiteNodes = models.stream()
+                .filter(model -> model.getColor() == Color.WHITE)
+                .count();
+        return whiteNodes == 0;
+    }
+
+    private BfsModel nodeNotVisited(List<BfsModel> models) {
+        return models.stream()
+                .filter(model -> model.getColor() == Color.WHITE)
+                .findFirst()
+                .orElse(null);
+    }
+
+    // ====================== HELPERS ======================
+
+    private void validateGraph() {
+        if (graph.isEmpty())
+            throw new RuntimeException("Operation prohibited! Graph is empty");
     }
 
 }

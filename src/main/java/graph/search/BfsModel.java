@@ -1,5 +1,6 @@
-package graph.model;
+package graph.search;
 
+import graph.model.Node;
 import graph.util.Json;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;

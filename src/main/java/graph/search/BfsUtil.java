@@ -1,6 +1,6 @@
-package graph.util;
+package graph.search;
 
-import graph.model.BfsModel;
+import graph.search.BfsModel;
 import graph.model.Node;
 
 import java.util.List;

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 class GraphTestBfsSearch {
 
@@ -51,6 +52,20 @@ class GraphTestBfsSearch {
     void testSearchGraphWithInitialNode() {
         Deque<Node> path = graph.search(1, 10);
         System.out.println(path);
+    }
+
+    @Test
+    void testWalkGraph() {
+        Map<Node, Node> predecessors = graph.walk();
+        System.out.println(predecessors);
+    }
+
+
+
+    @Test
+    void testWalkGraphWithInitialNode() {
+        Map<Node, Node> predecessors = graph.walk(4);
+        System.out.println(predecessors);
     }
 
 }
