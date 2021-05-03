@@ -1,30 +1,29 @@
 package graph.model;
 
-import com.google.gson.Gson;
-import graph.exception.MalformedObjectException;
 import graph.util.Json;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-import java.util.Arrays;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Node {
 
     @Positive
+    @EqualsAndHashCode.Include
     private final int id;
     private String name;
     private String color;
 
     @Override
     public String toString() {
-        return Json.toJson(new Node(id, name, color));
+        return Json.toJson(this);
+    }
+
+    public boolean equalsById(int otherId) {
+        return id == otherId;
     }
 
 }

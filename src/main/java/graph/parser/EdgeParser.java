@@ -1,4 +1,4 @@
-package graph.util;
+package graph.parser;
 
 import graph.exception.MalformedObjectException;
 import graph.model.Edge;
