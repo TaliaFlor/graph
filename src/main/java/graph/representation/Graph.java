@@ -123,7 +123,7 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
 
         markPathToTarget(queue, targetId);
 
-        return path(targetId);
+        return bfsUtil.path(targetId);
     }
 
     private void markPathToTarget(Queue<BfsModel> queue, int targetId) {
@@ -152,45 +152,6 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
             log.info("Target with ID {} not found! Search unsucessful", targetId);
     }
 
-    /**
-     * <p>
-     * Returns a deque with the path from the initial node to the target node
-     * </p>
-     *
-     * @param targetId the id of the target node
-     * @return a deque with the path from the initial node to the target node
-     */
-    private Deque<Node> path(int targetId) {
-        Deque<Node> deque = new ArrayDeque<>();
-
-        BfsModel target = bfsUtil.findById(targetId);
-        deque.offerFirst(target.getNode());
-
-        BfsModel predecessor = bfsUtil.findByNode(target.getPredecessor());
-        return predecessors(deque, predecessor);
-    }
-
-    /**
-     * <p>
-     * Returns a deque with the path from the initial node to the target node
-     * </p>
-     *
-     * @param deque a initiliazed deque alredy containing the target node which
-     *              will hold all predecessors nodes
-     * @param model the model being evalueted
-     * @return a deque with the path from the initial node to the target node
-     */
-    private Deque<Node> predecessors(Deque<Node> deque, BfsModel model) {
-        deque.offerFirst(model.getNode());
-
-        Node predecessorNode = model.getPredecessor();
-        if (predecessorNode != null) {
-            BfsModel predecessorModel = bfsUtil.findByNode(predecessorNode);
-            predecessors(deque, predecessorModel);
-        }
-
-        return deque;
-    }
 
     // ====================== WALK ======================
 
@@ -277,6 +238,12 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         return dijkstra(initialNodeId);
     }
 
+    public Deque<DijkstraModel> shortestPath(int initialNodeId, int targetId) {
+        log.trace("Searching for shortest path from node with ID {} to target node with ID {}", initialNodeId, targetId);
+        validateGraph();
+        return dijkstra(initialNodeId, targetId);
+    }
+
     private List<DijkstraModel> dijkstra(int initialNodeId) {
         dijkstraUtil = new DijkstraUtil(graph.keySet());
 
@@ -284,6 +251,17 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         initialNode.markAsInitialNode();
 
         return markPathToTarget();
+    }
+
+    private Deque<DijkstraModel> dijkstra(int initialNodeId, int targetId) {
+        dijkstraUtil = new DijkstraUtil(graph.keySet());
+
+        DijkstraModel initialNode = dijkstraUtil.findById(initialNodeId);
+        initialNode.markAsInitialNode();
+
+        markPathToTarget(targetId);
+
+        return dijkstraUtil.path(targetId);
     }
 
     private List<DijkstraModel> markPathToTarget() {
@@ -297,6 +275,28 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
             }
         }
         return dijkstraUtil.getModels();
+    }
+
+    private void markPathToTarget(int targetId) {
+        boolean targetFound = false;
+        while (dijkstraUtil.hasOpenNode()) {
+            DijkstraModel model = dijkstraUtil.getModelWithLowestEstimative();
+            model.closeNode();
+
+            List<Node> adjacencyList = getAdjacencyList(model.getNode());
+            for (DijkstraModel adjacencyModel : dijkstraUtil.getOpenNodes(adjacencyList)) {
+                adjacencyModel.markAsVisited(model, getEdge(model.getNode(), adjacencyModel.getNode()));
+
+                if (adjacencyModel.equalsById(targetId)) {
+                    log.info("Target with ID {} found! Search sucessful", targetId);
+                    targetFound = true;
+                    break;
+                }
+            }
+
+            if (targetFound)
+                break;
+        }
     }
 
     // ====================== HELPERS ======================

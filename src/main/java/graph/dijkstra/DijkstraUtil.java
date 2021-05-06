@@ -3,6 +3,8 @@ package graph.dijkstra;
 import graph.model.Node;
 import lombok.Getter;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
@@ -22,10 +24,6 @@ public class DijkstraUtil {
     public DijkstraUtil(Set<Node> nodes) {
         this.models = mapToDijkstraModel(nodes);
     }
-
-//    public DijkstraUtil(List<DijkstraModel> models) {
-//        this.models = models;
-//    }
 
 
     public DijkstraModel findById(int nodeId) {
@@ -77,6 +75,38 @@ public class DijkstraUtil {
         return nodes.stream()
                 .map(DijkstraModel::new)
                 .collect(toList());
+    }
+
+    public Deque<DijkstraModel> path(int targetId) {
+        Deque<DijkstraModel> deque = new ArrayDeque<>();
+
+        DijkstraModel target = findById(targetId);
+        deque.offerFirst(target);
+
+        DijkstraModel predecessor = findByNode(target.getPredecessor());
+        return predecessors(deque, predecessor);
+    }
+
+    /**
+     * <p>
+     * Returns a deque with the path from the initial node to the target node
+     * </p>
+     *
+     * @param deque a initiliazed deque alredy containing the target node which
+     *              will hold all predecessors nodes
+     * @param model the model being evalueted
+     * @return a deque with the path from the initial node to the target node
+     */
+    private Deque<DijkstraModel> predecessors(Deque<DijkstraModel> deque, DijkstraModel model) {
+        deque.offerFirst(model);
+
+        Node predecessorNode = model.getPredecessor();
+        if (predecessorNode != null) {
+            DijkstraModel predecessorModel = findByNode(predecessorNode);
+            predecessors(deque, predecessorModel);
+        }
+
+        return deque;
     }
 
 }

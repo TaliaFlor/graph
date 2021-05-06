@@ -47,8 +47,14 @@ class GraphTestDijkstra {
 
 
     @Test
-    void testDijkstra() {
+    void testDijkstraWithInitialNode() {
         List<DijkstraModel> shortestPaths = graph.shortestPath(1);
+        System.out.println(shortestPaths);
+    }
+
+    @Test
+    void testDijkstraWithInitialNodeAndFinalNode() {
+        Deque<DijkstraModel> shortestPaths = graph.shortestPath(1, 31);
         System.out.println(shortestPaths);
     }
 }
