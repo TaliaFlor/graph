@@ -14,18 +14,16 @@ import java.util.List;
 
 @Slf4j
 public class NodeReader implements DataReader<Node> {
+    private static final int HEADER_LINE = 1;
+    private static final char SEPARATOR = ',';
 
     private final NodeParser parser = new NodeParser();
 
     private final String filename;
-    private final int linesToSkip;
-    private final char separator;
 
 
-    public NodeReader(String filename, int linesToSkip, char separator) {
+    public NodeReader(String filename) {
         this.filename = filename;
-        this.linesToSkip = linesToSkip;
-        this.separator = separator;
     }
 
 
@@ -40,10 +38,10 @@ public class NodeReader implements DataReader<Node> {
             String line;
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
-                if (lineNumber == linesToSkip)
+                if (lineNumber == HEADER_LINE)
                     continue;
 
-                String[] data = line.split(String.valueOf(separator));
+                String[] data = line.split(String.valueOf(SEPARATOR));
                 Node node = parser.parse(data);
                 nodes.add(node);
             }

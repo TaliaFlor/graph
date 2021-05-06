@@ -31,7 +31,7 @@ public class NodeReaderTest {
 
     @Test
     void testNodeFileReader() {
-        reader = new NodeReader(FILENAME, NUM_LINES_TO_SKIP, SEPARATOR);
+        reader = new NodeReader(FILENAME);
         List<Node> nodeList = reader.read();
         assertNotNull(nodeList);
     }

@@ -15,19 +15,16 @@ import java.util.List;
 
 @Slf4j
 public class EdgeReader implements DataReader<Edge> {
+    private static final int HEADER_LINE = 1;
+    private static final char SEPARATOR = ',';
 
     private final EdgeParser parser;
 
     private final String filename;
-    private final int linesToSkip;
-    private final char separator;
 
 
-    public EdgeReader(List<Node> nodeList, String filename, int linesToSkip, char separator) {
+    public EdgeReader(List<Node> nodeList, String filename) {
         this.filename = filename;
-        this.linesToSkip = linesToSkip;
-        this.separator = separator;
-
         parser = new EdgeParser(nodeList);
     }
 
@@ -43,10 +40,10 @@ public class EdgeReader implements DataReader<Edge> {
             String line;
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
-                if (lineNumber == linesToSkip)
+                if (lineNumber == HEADER_LINE)
                     continue;
 
-                String[] data = line.split(String.valueOf(separator));
+                String[] data = line.split(String.valueOf(SEPARATOR));
                 Edge edge = parser.parse(data);
                 edges.add(edge);
             }

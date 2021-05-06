@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +21,8 @@ public class Edge {
     private final Node origin;
     private final Node destiny;
     private final boolean isDirected;
+    private final double weight;
+    private final List<String> pointsOfInterest;
 
 
     @Override

@@ -19,9 +19,9 @@ class GraphTestBfsSearch {
 
     @BeforeAll
     static void init() {
-        NodeReader nodeReader = new NodeReader("src/main/resources/examples/maze/nodes.csv", 1, ',');
+        NodeReader nodeReader = new NodeReader("src/main/resources/examples/maze/nodes.csv");
         List<Node> nodes = nodeReader.read();
-        EdgeReader edgeReader = new EdgeReader(nodes, "src/main/resources/examples/maze/edges.csv", 1, ',');
+        EdgeReader edgeReader = new EdgeReader(nodes, "src/main/resources/examples/maze/edges.csv");
         edges = edgeReader.read();
     }
 
