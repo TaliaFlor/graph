@@ -1,5 +1,7 @@
 package graph.representation;
 
+import graph.dijkstra.DijkstraModel;
+import graph.dijkstra.DijkstraUtil;
 import graph.model.Edge;
 import graph.model.Node;
 import graph.search.BfsModel;
@@ -25,9 +27,12 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
     //    private int nodes;
 //    private int edges;
     private final Map<Node, List<Node>> graph = new HashMap<>();     //Transformar isso num objecto e lista de objetos
+    private final List<Edge> edges = new ArrayList<>();
 
     @Getter(AccessLevel.NONE)
     private BfsUtil bfsUtil;
+    @Getter(AccessLevel.NONE)
+    private DijkstraUtil dijkstraUtil;
 
 
     @Override
@@ -42,10 +47,19 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         return graph.get(node);
     }
 
+    public Edge getEdge(Node origin, Node destiny) {
+        return edges.stream()
+                .filter(edge -> edge.getOrigin().equals(origin))
+                .filter(edge -> edge.getDestiny().equals(destiny))
+                .findFirst()
+                .orElse(null);
+    }
+
     // ====================== ADD ======================
 
     public void add(List<Edge> edges) {
         log.trace("Populating graph");
+        this.edges.addAll(edges);
         for (Edge edge : edges) {
             add(edge);
         }
@@ -134,7 +148,7 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
 
             model.markAsExplored();
         }
-        if(!targetFound)
+        if (!targetFound)
             log.info("Target with ID {} not found! Search unsucessful", targetId);
     }
 
@@ -253,6 +267,36 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
                 .filter(model -> model.getColor() == Color.WHITE)
                 .findFirst()
                 .orElse(null);
+    }
+
+    // ====================== CAMINHOS MÍNIMOS ======================
+
+    public List<DijkstraModel> shortestPath(int initialNodeId) {
+        log.trace("Searching for shortest path from node with ID {} to all other nodes on the graph", initialNodeId);
+        validateGraph();
+        return dijkstra(initialNodeId);
+    }
+
+    private List<DijkstraModel> dijkstra(int initialNodeId) {
+        dijkstraUtil = new DijkstraUtil(graph.keySet());
+
+        DijkstraModel initialNode = dijkstraUtil.findById(initialNodeId);
+        initialNode.markAsInitialNode();
+
+        return markPathToTarget();
+    }
+
+    private List<DijkstraModel> markPathToTarget() {
+        while (dijkstraUtil.hasOpenNode()) {
+            DijkstraModel model = dijkstraUtil.getModelWithLowestEstimative();
+            model.closeNode();
+
+            List<Node> adjacencyList = getAdjacencyList(model.getNode());
+            for (DijkstraModel adjacencyModel : dijkstraUtil.getOpenNodes(adjacencyList)) {
+                adjacencyModel.markAsVisited(model, getEdge(model.getNode(), adjacencyModel.getNode()));
+            }
+        }
+        return dijkstraUtil.getModels();
     }
 
     // ====================== HELPERS ======================
