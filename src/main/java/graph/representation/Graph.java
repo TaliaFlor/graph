@@ -232,12 +232,31 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
 
     // ====================== CAMINHOS MÍNIMOS ======================
 
+    /**
+     * <p>
+     * Calculates the shortest path from the initial node to a random node, given the
+     * edges weight.
+     * </p>
+     *
+     * @param initialNodeId the ID of the initial node
+     * @return the shortest path to a random node given the edges weight
+     */
     public List<DijkstraModel> shortestPath(int initialNodeId) {
         log.trace("Searching for shortest path from node with ID {} to all other nodes on the graph", initialNodeId);
         validateGraph();
         return dijkstra(initialNodeId);
     }
 
+    /**
+     * <p>
+     * Calculates the shortest path from the initial node to the target node, given
+     * the edges weight.
+     * </p>
+     *
+     * @param initialNodeId the ID of the initial node
+     * @param targetId      the ID of the target node
+     * @return the shortest path to the target node given the edges weight
+     */
     public Deque<DijkstraModel> shortestPath(int initialNodeId, int targetId) {
         log.trace("Searching for shortest path from node with ID {} to target node with ID {}", initialNodeId, targetId);
         validateGraph();
