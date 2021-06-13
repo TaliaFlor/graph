@@ -1,6 +1,5 @@
 package graph.search;
 
-import graph.search.BfsModel;
 import graph.model.Node;
 
 import java.util.ArrayDeque;

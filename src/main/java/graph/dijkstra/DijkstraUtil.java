@@ -8,6 +8,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -71,20 +72,22 @@ public class DijkstraUtil {
                 .collect(toList());
     }
 
-    public List<DijkstraModel> mapToDijkstraModel(Set<Node> nodes){
+    public List<DijkstraModel> mapToDijkstraModel(Set<Node> nodes) {
         return nodes.stream()
                 .map(DijkstraModel::new)
                 .collect(toList());
     }
 
-    public Deque<DijkstraModel> path(int targetId) {
+    public Deque<DijkstraSimpleModel> path(int targetId) {
         Deque<DijkstraModel> deque = new ArrayDeque<>();
 
         DijkstraModel target = findById(targetId);
         deque.offerFirst(target);
 
         DijkstraModel predecessor = findByNode(target.getPredecessor());
-        return predecessors(deque, predecessor);
+        Deque<DijkstraModel> predecessorsDeque = predecessors(deque, predecessor);
+
+        return getSimpleModels(predecessorsDeque);
     }
 
     /**
@@ -107,6 +110,18 @@ public class DijkstraUtil {
         }
 
         return deque;
+    }
+
+    public List<DijkstraSimpleModel> getSimpleModels() {
+        return models.stream()
+                .map(DijkstraSimpleModel::new)
+                .collect(toList());
+    }
+
+    public Deque<DijkstraSimpleModel> getSimpleModels(Deque<DijkstraModel> deque) {
+        return deque.stream()
+                .map(DijkstraSimpleModel::new)
+                .collect(toCollection(ArrayDeque::new));
     }
 
 }

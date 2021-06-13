@@ -3,7 +3,6 @@ package graph.dijkstra;
 import graph.model.Edge;
 import graph.model.Node;
 import graph.util.Json;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,7 +19,6 @@ import lombok.Setter;
 public class DijkstraModel {
     public static final double INFINITE = Double.MAX_VALUE;
 
-    @Positive
     @EqualsAndHashCode.Include
     private final Node node;
     private Status status = Status.OPEN;

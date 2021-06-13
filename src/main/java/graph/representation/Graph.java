@@ -1,6 +1,7 @@
 package graph.representation;
 
 import graph.dijkstra.DijkstraModel;
+import graph.dijkstra.DijkstraSimpleModel;
 import graph.dijkstra.DijkstraUtil;
 import graph.model.Edge;
 import graph.model.Node;
@@ -241,7 +242,7 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
      * @param initialNodeId the ID of the initial node
      * @return the shortest path to a random node given the edges weight
      */
-    public List<DijkstraModel> shortestPath(int initialNodeId) {
+    public List<DijkstraSimpleModel> shortestPath(int initialNodeId) {
         log.trace("Searching for shortest path from node with ID {} to all other nodes on the graph", initialNodeId);
         validateGraph();
         return dijkstra(initialNodeId);
@@ -257,13 +258,13 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
      * @param targetId      the ID of the target node
      * @return the shortest path to the target node given the edges weight
      */
-    public Deque<DijkstraModel> shortestPath(int initialNodeId, int targetId) {
+    public Deque<DijkstraSimpleModel> shortestPath(int initialNodeId, int targetId) {
         log.trace("Searching for shortest path from node with ID {} to target node with ID {}", initialNodeId, targetId);
         validateGraph();
         return dijkstra(initialNodeId, targetId);
     }
 
-    private List<DijkstraModel> dijkstra(int initialNodeId) {
+    private List<DijkstraSimpleModel> dijkstra(int initialNodeId) {
         dijkstraUtil = new DijkstraUtil(graph.keySet());
 
         DijkstraModel initialNode = dijkstraUtil.findById(initialNodeId);
@@ -272,7 +273,7 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         return markPathToTarget();
     }
 
-    private Deque<DijkstraModel> dijkstra(int initialNodeId, int targetId) {
+    private Deque<DijkstraSimpleModel> dijkstra(int initialNodeId, int targetId) {
         dijkstraUtil = new DijkstraUtil(graph.keySet());
 
         DijkstraModel initialNode = dijkstraUtil.findById(initialNodeId);
@@ -283,7 +284,7 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
         return dijkstraUtil.path(targetId);
     }
 
-    private List<DijkstraModel> markPathToTarget() {
+    private List<DijkstraSimpleModel> markPathToTarget() {
         while (dijkstraUtil.hasOpenNode()) {
             DijkstraModel model = dijkstraUtil.getModelWithLowestEstimative();
             model.closeNode();
@@ -293,7 +294,7 @@ public class Graph {    //TODO atributo com a quantidade de vértices e arestas
                 adjacencyModel.markAsVisited(model, getEdge(model.getNode(), adjacencyModel.getNode()));
             }
         }
-        return dijkstraUtil.getModels();
+        return dijkstraUtil.getSimpleModels();
     }
 
     private void markPathToTarget(int targetId) {

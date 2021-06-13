@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 public class EdgeParser implements Parser<Edge> {
     private static final int MIN_NUM_ATTRIBUTES = 4;
     private static final int MAX_NUM_ATTRIBUTES = 6;
@@ -59,7 +57,7 @@ public class EdgeParser implements Parser<Edge> {
 
         StringBuilder builder = new StringBuilder();
         for (String c : pointsOfInterestArray) {
-            if(!c.equals("|"))
+            if (!c.equals("|"))
                 builder.append(c);
             else {
                 pointsOfInterest.add(builder.toString());

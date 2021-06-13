@@ -6,7 +6,6 @@ import graph.model.Edge;
 import graph.model.Node;
 import graph.representation.Graph;
 
-import java.util.Deque;
 import java.util.List;
 
 public class Application {
@@ -18,7 +17,6 @@ public class Application {
 //        Graph graph = readGraph("simple/nodes.csv", "simple/edges.csv");
 //        Graph graph = readGraph("maze/nodes.csv", "maze/edges.csv");
         Graph graph = readGraph("shortest path/nodes.csv", "shortest path/edges.csv");
-
 
 
         System.out.println(graph);
