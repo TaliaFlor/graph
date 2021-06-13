@@ -61,7 +61,6 @@ class GraphTestBfsSearch {
     }
 
 
-
     @Test
     void testWalkGraphWithInitialNode() {
         Map<Node, Node> predecessors = graph.walk(4);

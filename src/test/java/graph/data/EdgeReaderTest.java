@@ -3,11 +3,9 @@ package graph.data;
 import graph.model.Edge;
 import graph.model.Node;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,7 +31,7 @@ public class EdgeReaderTest {
     void tearDown() {
         nodes = null;
 
-        nodeReader= null;
+        nodeReader = null;
         edgeReader = null;
     }
 

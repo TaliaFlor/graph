@@ -2,14 +2,14 @@ package graph.representation;
 
 import graph.data.EdgeReader;
 import graph.data.NodeReader;
-import graph.dijkstra.DijkstraModel;
+import graph.dijkstra.DijkstraSimpleModel;
 import graph.model.Edge;
 import graph.model.Node;
 import org.junit.jupiter.api.*;
+import util.Writer;
 
 import java.util.Deque;
 import java.util.List;
-import java.util.Map;
 
 class GraphTestDijkstra {
     private static final String PATH = "src/main/resources/examples/shortest path/";
@@ -48,13 +48,14 @@ class GraphTestDijkstra {
 
     @Test
     void testDijkstraWithInitialNode() {
-        List<DijkstraModel> shortestPaths = graph.shortestPath(1);
+        List<DijkstraSimpleModel> shortestPaths = graph.shortestPath(1);
         System.out.println(shortestPaths);
     }
 
     @Test
     void testDijkstraWithInitialNodeAndFinalNode() {
-        Deque<DijkstraModel> shortestPaths = graph.shortestPath(1, 31);
-        System.out.println(shortestPaths);
+        Deque<DijkstraSimpleModel> shortestPaths = graph.shortestPath(1, 31);
+//        System.out.println(shortestPaths);
+        Writer.write(shortestPaths.toString(), "src/test/java/util/shortest path.json");
     }
 }
