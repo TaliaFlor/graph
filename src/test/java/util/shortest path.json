@@ -1,0 +1,62 @@
+[
+  {
+    "nodeId": 1,
+    "totalDistance": 0.0,
+    "predecessorId": -1
+  },
+  {
+    "nodeId": 2,
+    "totalDistance": 193.49,
+    "predecessorId": 1
+  },
+  {
+    "nodeId": 3,
+    "totalDistance": 305.31,
+    "predecessorId": 2
+  },
+  {
+    "nodeId": 15,
+    "totalDistance": 422.32,
+    "predecessorId": 3
+  },
+  {
+    "nodeId": 16,
+    "totalDistance": 504.37,
+    "predecessorId": 15
+  },
+  {
+    "nodeId": 17,
+    "totalDistance": 580.49,
+    "predecessorId": 16
+  },
+  {
+    "nodeId": 19,
+    "totalDistance": 837.34,
+    "predecessorId": 17
+  },
+  {
+    "nodeId": 20,
+    "totalDistance": 959.4200000000001,
+    "predecessorId": 19
+  },
+  {
+    "nodeId": 21,
+    "totalDistance": 1031.54,
+    "predecessorId": 20
+  },
+  {
+    "nodeId": 22,
+    "totalDistance": 1102.6599999999999,
+    "predecessorId": 21
+  },
+  {
+    "nodeId": 23,
+    "totalDistance": 1181.6699999999998,
+    "predecessorId": 22
+  },
+  {
+    "nodeId": 31,
+    "totalDistance": 1341.31,
+    "predecessorId": 23
+  }
+]

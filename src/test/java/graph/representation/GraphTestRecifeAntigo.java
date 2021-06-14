@@ -11,8 +11,8 @@ import util.Writer;
 import java.util.Deque;
 import java.util.List;
 
-class GraphTestDijkstra {
-    private static final String PATH = "src/main/resources/examples/shortest path/";
+class GraphTestRecifeAntigo {
+    private static final String PATH = "src/main/resources/examples/recife antigo/";
     private static final String NODES_FILENAME = PATH + "nodes.csv";
     private static final String EDGES_FILENAME = PATH + "edges.csv";
 
@@ -54,8 +54,8 @@ class GraphTestDijkstra {
 
     @Test
     void testDijkstraWithInitialNodeAndFinalNode() {
-        Deque<DijkstraSimpleModel> shortestPaths = graph.shortestPath(1, 31);
-        Writer.write(shortestPaths.toString(), "src/test/java/util/shortest path.json");
+        Deque<DijkstraSimpleModel> shortestPaths = graph.shortestPath(1, 49);
+        Writer.write(shortestPaths.toString(), "src/test/java/util/recife antigo.json");
     }
 
 }

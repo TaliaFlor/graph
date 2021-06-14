@@ -41,7 +41,7 @@ public class NodeReader implements DataReader<Node> {
                 if (lineNumber == HEADER_LINE)
                     continue;
 
-                String[] data = line.split(String.valueOf(SEPARATOR));
+                String[] data = line.replace(" ", "").split(String.valueOf(SEPARATOR));
                 Node node = parser.parse(data);
                 nodes.add(node);
             }

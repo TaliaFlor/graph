@@ -1,0 +1,33 @@
+[{
+  "nodeId": 1,
+  "totalDistance": 0.0,
+  "predecessorId": -1
+}, {
+  "nodeId": 4,
+  "totalDistance": 138.47,
+  "predecessorId": 1
+}, {
+  "nodeId": 8,
+  "totalDistance": 186.3,
+  "predecessorId": 4
+}, {
+  "nodeId": 14,
+  "totalDistance": 224.47000000000003,
+  "predecessorId": 8
+}, {
+  "nodeId": 20,
+  "totalDistance": 283.59000000000003,
+  "predecessorId": 14
+}, {
+  "nodeId": 30,
+  "totalDistance": 399.19000000000005,
+  "predecessorId": 20
+}, {
+  "nodeId": 38,
+  "totalDistance": 435.55000000000007,
+  "predecessorId": 30
+}, {
+  "nodeId": 49,
+  "totalDistance": 462.7800000000001,
+  "predecessorId": 38
+}]
